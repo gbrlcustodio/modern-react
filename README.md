@@ -1,6 +1,6 @@
 # Modern react development 🔥
 
-## Modern Javascript
+## [Modern JavaScript](modern-js/README.md)
 
 ## React
 
