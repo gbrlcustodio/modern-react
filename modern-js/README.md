@@ -1,6 +1,6 @@
 # Modern JavaScript
 
-JavaScript is arguably one of the most important languages today. The rise of the web has taken JavaScript places it was never conceived to be. This document intends to briefly introduces modern JS features while comparing it to the old fashioned way of achieving the same result by writing the examples using ES5 only features side-by-side with new ESNext features.
+JavaScript is arguably one of the most important languages today. The rise of the web has taken JavaScript places it was never conceived to be. This document intends to briefly introduces modern JS features while comparing it to the old fashioned way of achieving the same result by writing the examples using ES5 only features side-by-side with new ES2015+ equivalents.
 
 ## History
 
@@ -85,15 +85,148 @@ With the release of ECMAScript 2015, the hype around web development became bigg
 
 ### Babel
 
+Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into backwards compatible version of JavaScript in current and older browsers or environments [[7](#References)]. Includes features like:
+- Transform syntax
+- Polyfill features that are missing in your target environment
+- Source code transformations
+
+```js
+// Babel Input: ES2015 arrow function
+[1, 2, 3].map((n) => n + 1);
+
+// Babel output: ES5 equivalent
+[1, 2, 3].map(function(n) {
+    return n + 1;
+});
+```
+
 ### Webpack
+
+Webpack is a static module bundler for modern JavaScript applications. When processes an application, it internally builds a dependency graph which maps every module that a specific project needs and generates one or more bundles [[8](#References)].
+
+![Webpack flow](../assets/webpack.png)
 
 ## Modern features
 
+This chapter will describe, more extensively, modern JavaScript features. It isn't intended to teach JavaScript, but to help developer with basic JS knowledge to get familiar with modern codebase.
+
+### Complementary resources
+
+- [ES6 - JavaScript Improved (Udacity free course)](https://www.udacity.com/course/es6-javascript-improved--ud356#)
+- [ES6 features with examples](http://es6-features.org/)
+- [Mozila Developer Network](https://developer.mozilla.org/en-US/search?q=)
+- [Getify - You don't know JS (Book series)](https://github.com/getify/You-Dont-Know-JS)
+
 ### Variable declaration
+There are three ways of declaring a variable, each having different implications. Those are `var`, `let` and `const`. With the two lasting ones being block scoped and var being function scoped. The scope of a variable roughly means "where is this variable available in the code".
+
+#### `const`
+Variable declared with `const` keyword are block scoped and can't be reassigned. Notice that it's not to be confused with immutability since its concern does not involve granting immutability, it only prevents it from being reassigned.
+
+```js
+const foo = { bar: 'baz' };
+
+// Will throw TypeError: invalid assignment to const 'foo'
+foo = { bar: 'qux', baz: 'quux' }; 
+
+foo.bar = 'qux'; 
+foo.baz = 'quux';
+
+console.log(foo)
+// foo now contains { bar: 'qux', baz: 'quux' }
+```
+
+#### `let`
+Also block scoped, when declared with let, variable can be reassigned as many times as required.
+
+```js
+let foo = 'bar';
+foo = 'baz';
+console.log(foo);
+
+// "baz", reassignment is allowed with let
+```
+
+#### `var`
+Are function scoped, meaning that whenever a `var` variable is created inside a function, it's available throughout the entire function life cycle.
+
+```js
+function myFunction() {
+    if (true) {
+        var myVar = "foo";
+    }
+
+
+    console.log(var); // "foo"
+}
+
+console.log(myVar); // Throws an ReferenceError
+```
+
+Besides that, when using `var` declared variables, they are moved to the top of its scope when being compiled. This is called **var hoisting** and allows variables to appear to be used before it's declared [[9](#References)].
+
+```js
+function myFunction() {
+    console.log(bar); // undefined
+    var bar = 111;
+    console.log(bar); // 111
+}
+
+// Implicitly understood as:
+function myFunction() {
+    var bar;
+    console.log(bar); // undefined
+    bar = 111;
+    console.log(bar); // 111
+}
+```
 
 #### Variable scope
+As mentioned above, `var` variables are function scoped. On the other hand `const` and `let` are block scoped, so are not accessible before defined and can't be re-declared in the same scope.
+
+```js
+console.log(foo); // Raises ReferenceError
+const foo = 'bar';
+
+function myFunction() {
+    let baz = 'baz'; // Scoped by myFunction
+
+    // Here, the block scope of baz is the if {}
+    if (true) {
+        let baz = 'qux';
+        console.log(baz) // qux
+    }
+
+    console.log(baz); // baz
+}
+
+let myVar = 2;
+let myVar = 3; // Raises SyntaxError
+```
 
 ### Arrow function
+
+Introduced as another way of declaring and using functions in a more concise way and having implicit return capabilities.
+
+```js
+function max(a, b) { return a > b ? a : b } // Traditionally
+const max = (a, b) => a > b ? a : b;
+```
+
+If your function only takes one parameter, you can omit the parentheses around it.
+
+```js
+const double = x => x * 2;
+```
+
+Arrow functions **are only implicitly return when the brackets are omitted**, that being said, the following won't return if not explicitly required;
+
+```js
+const double = (x) => {
+    x ** 2;
+    // return x ** 2;
+}
+```
 
 ### Default Parameter
 
@@ -158,3 +291,9 @@ With the release of ECMAScript 2015, the hype around web development became bigg
 [5] ECMAScript 2015 support in Mozilla. Available at [mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_2015_support_in_Mozilla).
 
 [6] ECMAScript® 2015 Language Specification. Available at [ECMA international](http://www.ecma-international.org/ecma-262/6.0/index.html).
+
+[7] What is Babel?. Available at [Babel docs](https://babeljs.io/docs).
+
+[8] Webpack concepts. Available at [Webpack docs](https://webpack.js.org/concepts).
+
+[9] var hoisting. Available at [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting)
