@@ -229,10 +229,50 @@ const double = (x) => {
 ```
 
 ### Default Parameter
+Allows function parameter to be initialized with a default value if no value or `undefined` is provided. In the past, the general strategy for setting defaults was to test parameter values in the function body and assign a value if they are undefined [[10](#References)].
+
+```js
+// Traditionally
+function myFunction(x) {
+  if (typeof x === 'undefined') {
+    x = 'defaultValue';
+  }
+  
+  // Logic goes here
+}
+
+//ES2015+
+const myFunction = (x = 'defaultValue') => {
+  // Logic goes here
+}
+```
 
 ### Destructuring
+It's a convenient way of creating new variables by unpacking values from Arrays and properties from Objects.
 
-#### Array methods
+#### Array examples
+```js
+const [first, second] = [0, 1];
+const [first, second = 1] = [0]; // Allows default values
+```
+
+Which could be manually achieved by index accessing the array and assigned to a new variable.
+
+```js
+var first = arr[0];
+var second = arr[1] || 1; // With default value as well
+```
+
+#### Object examples
+
+```js
+const { foo } = { foo: 'bar' };
+const { foo = 'bar' } = {}; // Allows default values
+const { foo: aliased_var } = { foo: 'bar' }; Allows aliasing
+const { foo: { bar } } = { foo: { bar: 'baz' } }; // Allows nested extraction
+```
+
+### Array methods
 
 #### Array.from()
 
@@ -296,4 +336,6 @@ const double = (x) => {
 
 [8] Webpack concepts. Available at [Webpack docs](https://webpack.js.org/concepts).
 
-[9] var hoisting. Available at [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting)
+[9] var hoisting. Available at [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting).
+
+[10] Default parameters. Available at [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters).
