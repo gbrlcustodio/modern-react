@@ -324,7 +324,27 @@ function callback(currentValue[, index[, array]]) {
 }
 ```
 
-#### Array.prototype.filter()
+#### Array.prototype.filter(callback)
+
+Produces a new array, with filtered elements, by applying a function over itself. Each element will be included in the new array if the filtering `callback` returns `true` when receives the current element as an argument.
+
+```js
+const arr = [1, 2, 3, 4];
+
+function isEven(number) {
+  return number % 2 === 0;
+}
+
+arr.filter(isEven); // [2, 4]
+```
+
+As with **map**, the callback function can be defined as:
+
+```js
+function callback(currentValue[, index[, array]]) {
+    // Return element
+}
+```
 
 #### Array.prototype.reduce()
 
