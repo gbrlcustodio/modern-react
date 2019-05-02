@@ -299,7 +299,13 @@ Array.from([1, 2, 3], x => x * x)
 // Outputs: Array(3) [ 1, 4, 9 ]
 ```
 
-#### Array.of()
+#### Array.of(element0[, element1[, ...[, elementN]]])
+Creates a new `Array` instance from a variable number of arguments.
+
+```js
+Array.of(7);       // [7] 
+Array.of(1, 2, 3); // [1, 2, 3]
+```
 
 #### Array.prototype.map()
 
