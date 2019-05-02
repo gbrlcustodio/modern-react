@@ -336,7 +336,7 @@ The mapping callback function can be expressed, verbosely, by:
 
 ```js
 function callback(currentValue[, index[, array]]) {
-    // Return element
+  // Return element
 }
 ```
 
@@ -358,11 +358,24 @@ As with **map**, the callback function can be defined as:
 
 ```js
 function callback(currentValue[, index[, array]]) {
-    // Return element
+  // Return element
 }
 ```
 
-#### Array.prototype.reduce()
+#### Array.prototype.reduce(callback[, accumulator)
+
+Executes a **reducer** function on each member of the array resulting in a single output value. The returned reducer value will be used in the next reducer call as first argument `accumulator`. The initial `accumulator` is defined by the second argument passed to `reduce`, or, if not supplied, it will use array's first element.
+
+```js
+const arr = [1, 2, 3, 4];
+
+function reducer(accumulator, currentValue) {
+  return accumulator + currentValue;
+}
+
+arr.reduce(reducer);
+// Expected output: 10
+```
 
 #### Array.prototype.find()
 
