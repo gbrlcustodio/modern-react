@@ -273,8 +273,31 @@ const { foo: { bar } } = { foo: { bar: 'baz' } }; // Allows nested extraction
 ```
 
 ### Array methods
+Beyond ECMAScript 6, new array methods were introduced and made JS feels more functional than ever. Next, you'll see how to use them.
 
-#### Array.from()
+#### Array.from(arrayLike, mapFunc?, thisArg?)
+A static method intended to convert two kinds of objects into an array:
+
+##### Array-like
+An object that has a property `length` and indexed elements.
+
+##### Iterable values
+Collections of elements that can be retrieved one element at a time. Examples of iterables are `Array`, `String` and new ECMAScript's `Map` and `Set`.
+
+
+```js
+const arrayLike = { length: 2, 0: 'a', 1: 'b' };
+
+Array.from(arrayLike);
+// Outputs: Array [ "a", "b" ]
+```
+
+You could also provide a mapping function in order to produce a different output.
+
+```js
+Array.from([1, 2, 3], x => x * x)
+// Outputs: Array(3) [ 1, 4, 9 ]
+```
 
 #### Array.of()
 
