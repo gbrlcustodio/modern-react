@@ -86,17 +86,18 @@ With the release of ECMAScript 2015, the hype around web development became bigg
 ### Babel
 
 Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into backwards compatible version of JavaScript in current and older browsers or environments [[7](#References)]. Includes features like:
+
 - Transform syntax
 - Polyfill features that are missing in your target environment
 - Source code transformations
 
 ```js
 // Babel Input: ES2015 arrow function
-[1, 2, 3].map((n) => n + 1);
+[1, 2, 3].map(n => n + 1);
 
 // Babel output: ES5 equivalent
 [1, 2, 3].map(function(n) {
-    return n + 1;
+  return n + 1;
 });
 ```
 
@@ -118,36 +119,40 @@ This chapter will describe, more extensively, modern JavaScript features. It isn
 - [Getify - You don't know JS (Book series)](https://github.com/getify/You-Dont-Know-JS)
 
 ### Variable declaration
+
 There are three ways of declaring a variable, each having different implications. Those are `var`, `let` and `const`. With the two lasting ones being block scoped and var being function scoped. The scope of a variable roughly means "where is this variable available in the code".
 
 #### `const`
+
 Variable declared with `const` keyword are block scoped and can't be reassigned. Notice that it's not to be confused with immutability since its concern does not involve granting immutability, it only prevents it from being reassigned.
 
 ```js
-const foo = { bar: 'baz' };
+const foo = { bar: "baz" };
 
 // Will throw TypeError: invalid assignment to const 'foo'
-foo = { bar: 'qux', baz: 'quux' }; 
+foo = { bar: "qux", baz: "quux" };
 
-foo.bar = 'qux'; 
-foo.baz = 'quux';
+foo.bar = "qux";
+foo.baz = "quux";
 
-console.log(foo)
+console.log(foo);
 // foo now contains { bar: 'qux', baz: 'quux' }
 ```
 
 #### `let`
+
 Also block scoped, when declared with let, variable can be reassigned as many times as required.
 
 ```js
-let foo = 'bar';
-foo = 'baz';
+let foo = "bar";
+foo = "baz";
 console.log(foo);
 
 // "baz", reassignment is allowed with let
 ```
 
 #### `var`
+
 Are function scoped, meaning that whenever a `var` variable is created inside a function, it's available throughout the entire function life cycle.
 
 ```js
@@ -167,37 +172,38 @@ Besides that, when using `var` declared variables, they are moved to the top of 
 
 ```js
 function myFunction() {
-    console.log(bar); // undefined
-    var bar = 111;
-    console.log(bar); // 111
+  console.log(bar); // undefined
+  var bar = 111;
+  console.log(bar); // 111
 }
 
 // Implicitly understood as:
 function myFunction() {
-    var bar;
-    console.log(bar); // undefined
-    bar = 111;
-    console.log(bar); // 111
+  var bar;
+  console.log(bar); // undefined
+  bar = 111;
+  console.log(bar); // 111
 }
 ```
 
 #### Variable scope
+
 As mentioned above, `var` variables are function scoped. On the other hand `const` and `let` are block scoped, so are not accessible before defined and can't be re-declared in the same scope.
 
 ```js
 console.log(foo); // Raises ReferenceError
-const foo = 'bar';
+const foo = "bar";
 
 function myFunction() {
-    let baz = 'baz'; // Scoped by myFunction
+  let baz = "baz"; // Scoped by myFunction
 
-    // Here, the block scope of baz is the if {}
-    if (true) {
-        let baz = 'qux';
-        console.log(baz) // qux
-    }
+  // Here, the block scope of baz is the if {}
+  if (true) {
+    let baz = "qux";
+    console.log(baz); // qux
+  }
 
-    console.log(baz); // baz
+  console.log(baz); // baz
 }
 
 let myVar = 2;
@@ -209,8 +215,10 @@ let myVar = 3; // Raises SyntaxError
 Introduced as another way of declaring and using functions in a more concise way and having implicit return capabilities.
 
 ```js
-function max(a, b) { return a > b ? a : b } // Traditionally
-const max = (a, b) => a > b ? a : b;
+function max(a, b) {
+  return a > b ? a : b;
+} // Traditionally
+const max = (a, b) => (a > b ? a : b);
 ```
 
 If your function only takes one parameter, you can omit the parentheses around it.
@@ -222,35 +230,38 @@ const double = x => x * 2;
 Arrow functions **are only implicitly return when the brackets are omitted**, that being said, the following won't return if not explicitly required;
 
 ```js
-const double = (x) => {
-    x ** 2;
-    // return x ** 2;
-}
+const double = x => {
+  x ** 2;
+  // return x ** 2;
+};
 ```
 
 ### Default Parameter
+
 Allows function parameter to be initialized with a default value if no value or `undefined` is provided. In the past, the general strategy for setting defaults was to test parameter values in the function body and assign a value if they are undefined [[10](#References)].
 
 ```js
 // Traditionally
 function myFunction(x) {
-  if (typeof x === 'undefined') {
-    x = 'defaultValue';
+  if (typeof x === "undefined") {
+    x = "defaultValue";
   }
-  
+
   // Logic goes here
 }
 
 //ES2015+
-const myFunction = (x = 'defaultValue') => {
+const myFunction = (x = "defaultValue") => {
   // Logic goes here
-}
+};
 ```
 
 ### Destructuring
+
 It's a convenient way of creating new variables by unpacking values from Arrays and properties from Objects.
 
 #### Array examples
+
 ```js
 const [first, second] = [0, 1];
 const [first, second = 1] = [0]; // Allows default values
@@ -273,20 +284,23 @@ const { foo: { bar } } = { foo: { bar: 'baz' } }; // Allows nested extraction
 ```
 
 ### Array methods
+
 Beyond ECMAScript 6, new array methods were introduced and made JS feels more functional than ever. Next, you'll see how to use them.
 
 #### Array.from(arrayLike, mapFunc?, thisArg?)
+
 A static method intended to convert two kinds of objects into an array:
 
 ##### Array-like
+
 An object that has a property `length` and indexed elements.
 
 ##### Iterable values
+
 Collections of elements that can be retrieved one element at a time. Examples of iterables are `Array`, `String` and new ECMAScript's `Map` and `Set`.
 
-
 ```js
-const arrayLike = { length: 2, 0: 'a', 1: 'b' };
+const arrayLike = { length: 2, 0: "a", 1: "b" };
 
 Array.from(arrayLike);
 // Outputs: Array [ "a", "b" ]
@@ -295,19 +309,21 @@ Array.from(arrayLike);
 You could also provide a mapping function in order to produce a different output.
 
 ```js
-Array.from([1, 2, 3], x => x * x)
+Array.from([1, 2, 3], x => x * x);
 // Outputs: Array(3) [ 1, 4, 9 ]
 ```
 
 #### Array.of(element0[, element1[, ...[, elementN]]])
+
 Creates a new `Array` instance from a variable number of arguments.
 
 ```js
-Array.of(7);       // [7] 
+Array.of(7); // [7]
 Array.of(1, 2, 3); // [1, 2, 3]
 ```
 
 #### Array.prototype.map(callback)
+
 Iterates over its elements applying some logic defined by `callback` witch in turns receives the current value and is responsible for returning something. As a result, it'll return a new array with those values returned by `callback`.
 
 ```js
