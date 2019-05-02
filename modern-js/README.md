@@ -307,7 +307,22 @@ Array.of(7);       // [7]
 Array.of(1, 2, 3); // [1, 2, 3]
 ```
 
-#### Array.prototype.map()
+#### Array.prototype.map(callback)
+Iterates over its elements applying some logic defined by `callback` witch in turns receives the current value and is responsible for returning something. As a result, it'll return a new array with those values returned by `callback`.
+
+```js
+const arr = [1, 2, 3];
+
+arr.map(x => x * 2); // [2, 4, 6]
+```
+
+The mapping callback function can be expressed, verbosely, by:
+
+```js
+function callback(currentValue[, index[, array]]) {
+    // Return element
+}
+```
 
 #### Array.prototype.filter()
 
