@@ -452,14 +452,14 @@ function callback(element, index, array)
 
 The spread operator `...` has been introduced with ES2015 and allows iterables (array like) to be expanded into places where multiple elements are expected or an object expression to be expanded in places where zero or more key-value pair can fit.
 
-##### Array like example
+##### Iterables example
 
 ```js
 const array = ["a", "b", "c"];
 const spreaded = [...array, "d", "e", "f"]; // ["a", "b", "c", "d", "e", "f"]
 ```
 
-#### Function arguments example
+#### Function rest parameter example
 
 ```js
 function myFunc(x, y, ...otherParams) {
@@ -489,6 +489,17 @@ console.log(n); // { x: 1, y: 2, a: 3, b: 4 }
 ```
 
 ### Object property shorthand
+
+When assigning a variable to an object property, if their name matches, you can do the following:
+
+```js
+const someProperty = 10;
+const someObject = {
+  someProperty
+};
+
+console.log(someObject.someProperty); // 10
+```
 
 ### Promises
 
