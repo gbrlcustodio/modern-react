@@ -327,9 +327,9 @@ Array.of(1, 2, 3); // [1, 2, 3]
 Iterates over its elements applying some logic defined by `callback` witch in turns receives the current value and is responsible for returning something. As a result, it'll return a new array with those values returned by `callback`.
 
 ```js
-const arr = [1, 2, 3];
+const array = [1, 2, 3];
 
-arr.map(x => x * 2); // [2, 4, 6]
+array.map(x => x * 2); // [2, 4, 6]
 ```
 
 The mapping callback function can be expressed, verbosely, by:
@@ -345,13 +345,13 @@ function callback(currentValue[, index[, array]]) {
 Produces a new array, with filtered elements, by applying a function over itself. Each element will be included in the new array if the filtering `callback` returns `true` when receives the current element as an argument.
 
 ```js
-const arr = [1, 2, 3, 4];
+const array = [1, 2, 3, 4];
 
 function isEven(number) {
   return number % 2 === 0;
 }
 
-arr.filter(isEven); // [2, 4]
+array.filter(isEven); // [2, 4]
 ```
 
 As with **map**, the callback function can be defined as:
@@ -367,25 +367,114 @@ function callback(currentValue[, index[, array]]) {
 Executes a **reducer** function on each member of the array resulting in a single output value. The returned reducer value will be used in the next reducer call as first argument `accumulator`. The initial `accumulator` is defined by the second argument passed to `reduce`, or, if not supplied, it will use array's first element.
 
 ```js
-const arr = [1, 2, 3, 4];
+const array = [1, 2, 3, 4];
 
 function reducer(accumulator, currentValue) {
   return accumulator + currentValue;
 }
 
-arr.reduce(reducer);
+array.reduce(reducer);
 // Expected output: 10
 ```
 
-#### Array.prototype.find()
+#### Array.prototype.find(callback)
 
-#### Array.prototype.findIndex()
+Returns the first element for which the `callback` returns `true` or `undefined` if none was found.
 
-#### Array.prototype.every()
+```js
+[6, -5, 8].find(x => x < 0);
+// Outputs -5
+
+[(6, 5, 8)].find(x => x < 0);
+// Outputs undefined
+```
+
+#### Array.prototype.findIndex(callback)
+
+Returns the index of the first element for which the `callback` returns `true`. If the is no match, it'll return -1.
+
+```js
+[6, -5, 8].findIndex(x => x < 0);
+// Outputs 1
+[6, 5, 8].findIndex(x => x < 0);
+// Outputs -1
+```
+
+The full signature of the `callback` is:
+
+```js
+function callback(element, index, array)
+```
+
+#### Array.prototype.every(callback)
+
+Tests whether all elements in the array satisfied the `callback` condition.
+
+```js
+function isBelowThreshold(currentValue) {
+  return currentValue < 40;
+}
+
+const array = [1, 30, 39, 29, 10, 13];
+
+array.every(isBelowThreshold);
+// Outputs `true`
+```
+
+The full signature of the `callback` is:
+
+```js
+function callback(element, index, array)
+```
 
 #### Array.prototype.some()
 
+Tests whether at least one element in the array satisfied the `callback` condition.
+
+```js
+const array = [1, 2, 3, 4, 5];
+
+function isEven(element) {
+  return element % 2 === 0;
+}
+
+array.some(even);
+// Outputs `true`
+```
+
+The full signature of the `callback` is:
+
+```js
+function callback(element, index, array)
+```
+
 ### Spread Operator
+
+The spread operator `...` has been introduced with ES2015 and allows iterables (array like) to be expanded into places where multiple elements are expected or an object expression to be expanded in places where zero or more key-value pair can fit.
+
+##### Array like example
+
+```js
+const array = ["a", "b", "c"];
+const spreaded = [...array, "d", "e", "f"]; // ["a", "b", "c", "d", "e", "f"]
+```
+
+#### Function arguments example
+
+```js
+function myFunc(x, y, ...otherParams) {
+  /**
+   * x here represents the first argument
+   * y here represents the second argument
+   * otherParams will enclosure any other arguments in an array
+   */
+}
+
+myFunc("a", "b", "c", "d", "e", "f");
+// "a"
+// "b"
+// ["c", "d", "e", "f"]
+```
 
 ### Object property shorthand
 
